@@ -1,12 +1,12 @@
 from pynubank import Nubank, MockHttpClient
 import config
 from json_handler import create_json
+import types
 
 
-nu = Nubank(MockHttpClient())
-nu.authenticate_with_qr_code(config.login_info["user"],
-                            config.login_info["password"], 
-                            config.login_info["authentication"])
+#nu = Nubank(MockHttpClient())
+nu = Nubank()
+nu.authenticate_with_cert(config.login_info["user"], config.login_info["password"], config.login_info["authentication"])
 
 
 def card_statements():
@@ -49,21 +49,9 @@ def available_pix_keys():
     return nu.get_available_pix_keys()
 
 
+defined_functions = [f for f in globals().values() if type(f) == types.FunctionType]
+functions_not_to_call = [create_json, bill_details]
 
-create_json(card_statements)
-create_json(card_feed)
-create_json(card_payments)
-
-create_json(transactions)
-create_json(bills)
-
-create_json(customer)
-
-create_json(account_feed)
-create_json(account_balance)
-create_json(account_statements)
-create_json(account_investments_details)
-create_json(account_investments_yield)
-
-
-
+for function in defined_functions:
+    if function not in functions_not_to_call:
+        create_json(function)
