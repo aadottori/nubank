@@ -11,7 +11,7 @@ base_url = "https://alertzy.app/send"
 accountKey = os.getenv("accountKey")
 
 title = "Resumo Nubank"
-message = f"Cartão Antonio: {card_bills['antonio']} \n Cartão Milla: {card_bills['milla']} \n Total: {card_bills['total']}"
+message = f"Fatura do cartão: {card_bills['antonio']}"
 
 url = f"{base_url}?accountKey={accountKey}&title={title}&message={message}"
 
